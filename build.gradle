@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'org.mintos'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.eclipse.jetty:jetty-server:9.2.13.v20150730'
+    compile 'org.eclipse.jetty:jetty-servlet:9.2.13.v20150730'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.2'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.2'
+    compile 'org.apache.httpcomponents:fluent-hc:4.5.2'
+    compile 'org.apache.commons:commons-lang3:3.9'
+    compile 'com.h2database:h2:1.4.200'
+    compile 'com.typesafe:config:1.4.0'
+    implementation 'org.hibernate:hibernate-core:5.4.12.Final'
+    implementation 'org.hibernate:hibernate-entitymanager:5.4.12.Final'
+
+    compile 'log4j:log4j:1.2.17'
+}
