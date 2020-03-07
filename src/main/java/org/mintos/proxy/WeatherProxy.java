@@ -1,10 +1,12 @@
 package org.mintos.proxy;
 
 import org.apache.http.client.utils.URIBuilder;
+import org.mintos.model.geo.GeoResponse;
 import org.mintos.model.weather.WeatherResponse;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.concurrent.CompletableFuture;
 
 public class WeatherProxy extends ServiceProxy {
 
@@ -16,10 +18,20 @@ public class WeatherProxy extends ServiceProxy {
         weatherApiKey = conf.getString("mintos.weather-api.key");
     }
 
-    public WeatherResponse getWeatherResponse(final String lat, final String lon) throws URISyntaxException, IOException {
-        final URIBuilder uriBuilder = new URIBuilder(weatherApiUrl)
-                .addParameter("key", weatherApiKey)
-                .addParameter("q", lat.concat(",").concat(lon));
-        return get(WeatherResponse.class, uriBuilder);
+    public CompletableFuture<WeatherResponse> getWeatherResponse(final GeoResponse geoResponse) {
+        return CompletableFuture.supplyAsync(() -> {
+            Double latitude = geoResponse.getLatitude();
+            Double longitude = geoResponse.getLongitude();
+            final URIBuilder uriBuilder;
+            try {
+                uriBuilder = new URIBuilder(weatherApiUrl)
+                        .addParameter("key", weatherApiKey)
+                        .addParameter("q", latitude.toString().concat(",").concat(longitude.toString()));
+                return get(WeatherResponse.class, uriBuilder);
+            } catch (URISyntaxException | IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
     }
 }

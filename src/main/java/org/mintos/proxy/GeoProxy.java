@@ -5,6 +5,7 @@ import org.mintos.model.geo.GeoResponse;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.concurrent.CompletableFuture;
 
 public class GeoProxy extends ServiceProxy {
 
@@ -14,8 +15,16 @@ public class GeoProxy extends ServiceProxy {
         ipFindUrl= conf.getString("mintos.ip-find.url");
     }
 
-    public GeoResponse getGeoResponse(final String ipAddress) throws URISyntaxException, IOException {
-        final URIBuilder uriBuilder = new URIBuilder(ipFindUrl).addParameter("ip", ipAddress);
-        return get(GeoResponse.class, uriBuilder);
+    public CompletableFuture<GeoResponse> getGeoResponse(final String ipAddress) {
+        return CompletableFuture.supplyAsync(() -> {
+            final URIBuilder uriBuilder;
+            try {
+                uriBuilder = new URIBuilder(ipFindUrl).addParameter("ip", ipAddress);
+                return get(GeoResponse.class, uriBuilder);
+            } catch (URISyntaxException | IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
     }
 }
