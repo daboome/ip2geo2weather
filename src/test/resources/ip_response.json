@@ -1,0 +1,17 @@
+{
+  "ip_address" : "212.3.196.129",
+  "country" : "Latvia",
+  "country_code" : "LV",
+  "continent" : "Europe",
+  "continent_code" : "EU",
+  "city" : "Riga",
+  "county" : "Rīga",
+  "region" : "Riga",
+  "region_code" : "25",
+  "timezone" : "Europe/Riga",
+  "longitude" : 24.0978,
+  "latitude" : 56.9496,
+  "currency" : "EUR",
+  "languages" : [ "lv", "ru", "lt" ],
+  "warning" : "You are not using an IP Find API Key. You are limited to 100 requests/day. Register for free at https://ipfind.co for higher limits"
+}

@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
 
 public class WeatherProxy extends ServiceProxy {
+    // Mutable for the sake of unit testing
+    private Double failureRate;
 
     private static final String WEATHER_SERVICE_NOT_AVAILABLE_ERR_MSG = "Weather service not available";
 
@@ -16,13 +18,14 @@ public class WeatherProxy extends ServiceProxy {
     final String weatherApiKey;
 
     public WeatherProxy() {
+        failureRate = conf.getDouble("mintos.failure-rate.weather");
         weatherApiUrl = conf.getString("mintos.weather-api.url");
         weatherApiKey = conf.getString("mintos.weather-api.key");
     }
 
     public CompletableFuture<WeatherResponse> getWeatherResponse(final GeoResponse geoResponse) {
         CompletableFuture<WeatherResponse> result = new CompletableFuture<>();
-        if (Math.random() < 0.5) {
+        if (Math.random() < failureRate) {
             result.completeExceptionally(new IllegalStateException(WEATHER_SERVICE_NOT_AVAILABLE_ERR_MSG));
         } else {
             result = CompletableFuture.supplyAsync(() -> {
@@ -40,5 +43,14 @@ public class WeatherProxy extends ServiceProxy {
             });
         }
         return result;
+    }
+
+    public static String getWeatherServiceNotAvailableErrMsg() {
+        return WEATHER_SERVICE_NOT_AVAILABLE_ERR_MSG;
+    }
+
+    // Mutating method for the sake of unit testing
+    public void setFailureRate(Double failureRate) {
+        this.failureRate = failureRate;
     }
 }

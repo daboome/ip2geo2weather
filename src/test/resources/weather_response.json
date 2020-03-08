@@ -1,0 +1,41 @@
+{
+  "location" : {
+    "name" : "Rija",
+    "region" : "Riga",
+    "country" : "Latvia",
+    "lat" : 56.95,
+    "lon" : 24.1,
+    "tz_id" : "Europe/Riga",
+    "localtime_epoch" : 1583663932,
+    "localtime" : "2020-03-08 12:38"
+  },
+  "current" : {
+    "last_updated_epoch" : 1583663415,
+    "last_updated" : "2020-03-08 12:30",
+    "temp_c" : 4.0,
+    "temp_f" : 39.2,
+    "is_day" : 1,
+    "condition" : {
+      "text" : "Partly cloudy",
+      "icon" : "//cdn.weatherapi.com/weather/64x64/day/116.png",
+      "code" : 1003
+    },
+    "wind_mph" : 0.0,
+    "wind_kph" : 0.0,
+    "wind_degree" : 334,
+    "wind_dir" : "NNW",
+    "pressure_mb" : 1016.0,
+    "pressure_in" : 30.5,
+    "precip_mm" : 0.1,
+    "precip_in" : 0.0,
+    "humidity" : 87,
+    "cloud" : 75,
+    "feelslike_c" : 4.0,
+    "feelslike_f" : 39.2,
+    "vis_km" : 10.0,
+    "vis_miles" : 6.0,
+    "uv" : 2.0,
+    "gust_mph" : 6.5,
+    "gust_kph" : 10.4
+  }
+}
