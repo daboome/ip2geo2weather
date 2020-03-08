@@ -1,8 +1,11 @@
 package org.mintos.proxy;
 
 import org.apache.http.client.utils.URIBuilder;
+import org.mintos.model.IdentifiableEntity;
 import org.mintos.model.geo.GeoResponse;
+import org.mintos.util.HibernateUtil;
 
+import javax.persistence.Id;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
@@ -30,7 +33,12 @@ public class GeoProxy extends ServiceProxy {
                 final URIBuilder uriBuilder;
                 try {
                     uriBuilder = new URIBuilder(ipFindUrl).addParameter("ip", ipAddress);
-                    return get(GeoResponse.class, uriBuilder);
+                    GeoResponse geoResponse = get(GeoResponse.class, uriBuilder);
+                    IdentifiableEntity identifiableEntity = new IdentifiableEntity(geoResponse);
+                    identifiableEntity.setIpAddress(ipAddress);
+                    HibernateUtil.INSTANCE.saveOrUpdateInTransaction(identifiableEntity);
+                    geoResponse.setId(identifiableEntity.getId());
+                    return geoResponse;
                 } catch (URISyntaxException | IOException e) {
                     e.printStackTrace();
                     throw new IllegalStateException(IP_2_GEO_SERVICE_NOT_AVAILABLE_ERR_MSG);

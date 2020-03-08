@@ -1,8 +1,10 @@
 package org.mintos.proxy;
 
 import org.apache.http.client.utils.URIBuilder;
+import org.mintos.model.IdentifiableEntity;
 import org.mintos.model.geo.GeoResponse;
 import org.mintos.model.weather.WeatherResponse;
+import org.mintos.util.HibernateUtil;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -36,7 +38,13 @@ public class WeatherProxy extends ServiceProxy {
                     uriBuilder = new URIBuilder(weatherApiUrl)
                             .addParameter("key", weatherApiKey)
                             .addParameter("q", latitude.toString().concat(",").concat(longitude.toString()));
-                    return get(WeatherResponse.class, uriBuilder);
+                    WeatherResponse weatherResponse = get(WeatherResponse.class, uriBuilder);
+                    IdentifiableEntity identifiableEntity = new IdentifiableEntity(weatherResponse);
+                    identifiableEntity.setId(geoResponse.getId());
+                    identifiableEntity.setGeoResponse(geoResponse);
+                    identifiableEntity.setIpAddress(geoResponse.getIpAddress());
+                    HibernateUtil.INSTANCE.saveOrUpdateInTransaction(identifiableEntity);
+                    return weatherResponse;
                 } catch (URISyntaxException | IOException e) {
                     throw new IllegalStateException(WEATHER_SERVICE_NOT_AVAILABLE_ERR_MSG);
                 }

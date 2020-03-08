@@ -23,6 +23,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     "localtime_epoch",
     "localtime"
 })
+
 public class Location {
 
     @JsonProperty("name")

@@ -12,92 +12,116 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.*;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "last_updated_epoch",
-    "last_updated",
-    "temp_c",
-    "temp_f",
-    "is_day",
-    "condition",
-    "wind_mph",
-    "wind_kph",
-    "wind_degree",
-    "wind_dir",
-    "pressure_mb",
-    "pressure_in",
-    "precip_mm",
-    "precip_in",
-    "humidity",
-    "cloud",
-    "feelslike_c",
-    "feelslike_f",
-    "vis_km",
-    "vis_miles",
-    "uv",
-    "gust_mph",
-    "gust_kph"
+        "last_updated_epoch",
+        "last_updated",
+        "temp_c",
+        "temp_f",
+        "is_day",
+        "condition",
+        "wind_mph",
+        "wind_kph",
+        "wind_degree",
+        "wind_dir",
+        "pressure_mb",
+        "pressure_in",
+        "precip_mm",
+        "precip_in",
+        "humidity",
+        "cloud",
+        "feelslike_c",
+        "feelslike_f",
+        "vis_km",
+        "vis_miles",
+        "uv",
+        "gust_mph",
+        "gust_kph"
 })
+@Embeddable
 public class Current {
-
     @JsonProperty("last_updated_epoch")
+    @Transient
     private Integer lastUpdatedEpoch;
     @JsonProperty("last_updated")
+    @Transient
     private String lastUpdated;
     @JsonProperty("temp_c")
+    @Column(name = "temp_C")
     private Double tempC;
     @JsonProperty("temp_f")
+    @Column(name = "temp_F")
     private Double tempF;
     @JsonProperty("is_day")
+    @Transient
     private Integer isDay;
     @JsonProperty("condition")
+    @Transient
     private Condition condition;
     @JsonProperty("wind_mph")
+    @Transient
     private Double windMph;
     @JsonProperty("wind_kph")
+    @Transient
     private Double windKph;
     @JsonProperty("wind_degree")
+    @Transient
     private Integer windDegree;
     @JsonProperty("wind_dir")
+    @Transient
     private String windDir;
     @JsonProperty("pressure_mb")
+    @Transient
     private Double pressureMb;
     @JsonProperty("pressure_in")
+    @Transient
     private Double pressureIn;
     @JsonProperty("precip_mm")
+    @Transient
     private Double precipMm;
     @JsonProperty("precip_in")
+    @Transient
     private Double precipIn;
+    @Transient
     @JsonProperty("humidity")
     private Integer humidity;
     @JsonProperty("cloud")
+    @Transient
     private Integer cloud;
     @JsonProperty("feelslike_c")
+    @Transient
     private Double feelslikeC;
     @JsonProperty("feelslike_f")
+    @Transient
     private Double feelslikeF;
     @JsonProperty("vis_km")
+    @Transient
     private Double visKm;
     @JsonProperty("vis_miles")
+    @Transient
     private Double visMiles;
     @JsonProperty("uv")
+    @Transient
     private Double uv;
     @JsonProperty("gust_mph")
+    @Transient
     private Double gustMph;
     @JsonProperty("gust_kph")
+    @Transient
     private Double gustKph;
     @JsonIgnore
+    @Transient
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public Current() {
     }
 
     /**
-     * 
      * @param tempF
      * @param precipMm
      * @param uv

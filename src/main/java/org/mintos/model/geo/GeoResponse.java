@@ -12,6 +12,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.mintos.model.IdentifiableEntity;
+
+import javax.persistence.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -32,41 +35,58 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     "languages",
     "warning"
 })
-public class GeoResponse {
-
+@Embeddable
+public class GeoResponse extends IdentifiableEntity {
     @JsonProperty("ip_address")
+    @Transient
     private String ipAddress;
     @JsonProperty("country")
+    @Column(name = "country")
     private String country;
     @JsonProperty("country_code")
+    @Transient
     private String countryCode;
     @JsonProperty("continent")
+    @Transient
     private String continent;
     @JsonProperty("continent_code")
+    @Transient
     private String continentCode;
     @JsonProperty("city")
+    @Column(name = "city")
     private String city;
     @JsonProperty("county")
+    @Transient
     private String county;
     @JsonProperty("region")
+    @Transient
     private String region;
     @JsonProperty("region_code")
+    @Transient
     private String regionCode;
     @JsonProperty("timezone")
+    @Transient
     private String timezone;
     @JsonProperty("owner")
+    @Transient
     private Object owner;
     @JsonProperty("longitude")
+    @Column(name = "longitude")
     private Double longitude;
     @JsonProperty("latitude")
+    @Column(name = "latitude")
     private Double latitude;
     @JsonProperty("currency")
+    @Transient
     private String currency;
     @JsonProperty("languages")
+    @Transient
     private List<String> languages = null;
     @JsonProperty("warning")
+    @Transient
     private String warning;
     @JsonIgnore
+    @Transient
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
